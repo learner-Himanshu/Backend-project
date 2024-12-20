@@ -1,5 +1,3 @@
-import { error } from "console";
-
 const asyncHandler = (requestHandler) => {
   (req, res, next) => {
     Promise.resolve(requestHandler(req, res, next)).catch((error) =>
@@ -10,4 +8,4 @@ const asyncHandler = (requestHandler) => {
 
 // asyncHandler()
 
-export default asyncHandler
+export default asyncHandler;
