@@ -10,19 +10,37 @@ import fs from "fs"
     }) 
     
 
-    // Upload an image
-     const uploadResult = await cloudinary.uploader
-       .upload(
-           'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
-               public_id: 'shoes',
-           }
-       )
-       .catch((error) => {
-           console.log(error);
-       });
+
+
+
+     const uploadOnCloudinary = async (localFilePath) => {
+        try {
+            if (!localFilePath) return null
+                 // upload the file at cloudinary
+           const response = await cloudinary.uploader.upload(localFilePath,{ resource_type:"auto"})
+            console.log("File uploaded successfully", response.url);
+            return response;
+        }
+        catch (error){
+               fs.unlinkSync(localFilePath)  // it will remove the file from the local storage
+               return null;
+        }
+     }
+    // // Upload an image
+    //  const uploadResult = await cloudinary.uploader
+    //    .upload(
+    //        'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
+    //            public_id: 'shoes',
+    //        }
+    //    )
+    //    .catch((error) => {
+    //        console.log(error);
+    //    });
     
-    console.log(uploadResult);
+    // console.log(uploadResult);
     
     
 
 })()
+
+export default cloudinary;
